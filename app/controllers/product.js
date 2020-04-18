@@ -5,8 +5,8 @@ class ProductController {
     async get(request, reply) {
         try {
         const params = request.params.product_id;
-        // const result = await product.get(params);
-        return params;
+        const result = await product.get(params);
+        return result;
         } catch (error) {
             console.log(error)
         }

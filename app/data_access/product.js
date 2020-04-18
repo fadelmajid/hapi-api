@@ -6,8 +6,10 @@ class ProductDAO {
             let sql = "SELECT * FROM product WHERE product = $1 LIMIT 1"
 
             let rows = db.query(sql, [id])
-            return rows.rows[0];
+            console.log(rows)
+            // return rows.rows[0];
         } catch (error) {
+            console.log(error)
             throw error
         }
     }

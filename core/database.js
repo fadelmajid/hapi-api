@@ -32,8 +32,13 @@ class Database {
         return conn
     }
 
-    async query () {
-        return await this.getConnection()
+    async query (sql, params) {
+        console.log(sql);
+        console.log(params);
+        let conn = await this.getPool()
+        console.log(conn);
+        let query = await conn.query(sql, params)
+        return query
     }
 
     async getAll(conn, sql, data, limit) {
