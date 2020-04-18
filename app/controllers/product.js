@@ -4,11 +4,12 @@ const product = new ProductDAO;
 class ProductController {
     async get(request, reply) {
         try {
-        const params = request.params.product_id;
-        const result = await product.get(params);
-        return result;
+            const params = request.params.product_id;
+
+            const result = await product.get(params);
+            return result;
         } catch (error) {
-            console.log(error)
+            throw error
         }
     }
 }

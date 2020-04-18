@@ -1,13 +1,23 @@
-const Database = require('../../core/database');
-const db = new Database;
+'use strict';
+
+const Db = require('../../core/db');
+const db = new Db;
+
 class ProductDAO {
     async get(id) {
         try {
-            let sql = "SELECT * FROM product WHERE product = $1 LIMIT 1"
+            let values = [
+                id
+            ]
 
-            let rows = db.query(sql, [id])
-            console.log(rows)
-            // return rows.rows[0];
+			let sql = 'SELECT * FROM product WHERE product_id = $1 ';
+
+			let result = await db.query({
+				sql : sql, 
+				values: values
+            });
+            
+            return result;
         } catch (error) {
             console.log(error)
             throw error
