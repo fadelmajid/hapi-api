@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/fadelmajid/hapi-api#readme",
   "dependencies": {
-    "@hapi/hapi": "^19.1.1"
+    "@hapi/hapi": "^19.1.1",
+    "underscore": "^1.10.2"
   }
 }

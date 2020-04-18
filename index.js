@@ -1,11 +1,12 @@
 "use strict";
 
-var Hapi = require('@hapi/hapi');
-var constants = require('src/config/constants.js');
-var routes = require('src/routes');
-var _ = require('underscore');
+const Hapi = require('@hapi/hapi');
+const constants = require('./config/config.json');
+const routes = require('./app/routes');
+const _ = require('underscore');
+const environment = process.env;
 
-var options = {
+const options = {
 	state : {
 		cookies : {
 			strictHeader : false
@@ -13,21 +14,15 @@ var options = {
 	}
 };
 
-var host = constants.application['host'];
-var port = constants.application['port'];
-var server = Hapi.createServer(host, port, options);
-
-server.ext('onRequest', function(request, next){
-	request.plugins.createControllerParams = function(requestParams){
-		var params = _.clone(requestParams);
-		params.userId = request.auth.credentials.userId;
-		return params;
-	};
-	next();
+const host = constants['development'].host;
+const port = constants['development'].app_port
+const server = Hapi.server({
+    port: port,
+    host: host
 });
 
 // Add all the routes within the routes folder
-for (var route in routes) {
+for (const route in routes) {
 	server.route(routes[route]);
 }
 
