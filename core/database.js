@@ -10,7 +10,7 @@ class Database {
             if (pool) {
                 return pool
             }
-            pool = await postgres({
+            pool = await new postgres({
                 connectionLimit : 500,
                 host: configDB.host,
                 port: configDB.port,
@@ -18,8 +18,7 @@ class Database {
                 password: configDB.password,
                 database: configDB.database,
                 timezone: 'SYSTEM',
-                timeout: 5,
-                debug: ENV === 'development' ? ['ComQueryPacket'] : false
+                timeout: 5
             })
             return pool
         } catch (error) {
@@ -28,9 +27,13 @@ class Database {
     }
 
     async getConnection () {
-        let conn = await db.getPool()
+        let conn = await this.getPool()
         conn = await conn.connect()
         return conn
+    }
+
+    async query () {
+        return await this.getConnection()
     }
 
     async getAll(conn, sql, data, limit) {

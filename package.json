@@ -19,7 +19,10 @@
   "homepage": "https://github.com/fadelmajid/hapi-api#readme",
   "dependencies": {
     "@hapi/hapi": "^19.1.1",
+    "assert-plus": "^1.0.0",
+    "fs": "0.0.1-security",
     "nodemon": "^2.0.3",
+    "path": "^0.12.7",
     "pg": "^8.0.2",
     "underscore": "^1.10.2"
   }
