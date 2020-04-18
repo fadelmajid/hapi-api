@@ -1,20 +1,16 @@
 "use strict";
 
-var productController = require('../controllers/product');
-// var productValidate = require('src/validate/product');
+const ProductController = require('../controllers/product');
+const product = new ProductController;
 
 module.exports = function() {
 	return [
 		{
 			method: 'GET',
 			path: '/product/{product_id}',
-			handler: () => {
-				return 'Halo';
-			}
-			
-			// {
-			// 	handler: productController.findByID,
-			// 	// validate: productValidate.findByID
+			handler: product.get
+			// handler: (request, h) => {
+			// 	return request.params.product_id;
 			// }
 		},
 		// {
