@@ -1,34 +1,39 @@
 let postgres = require("pg").Pool
 let pool
-let dbx = (rootpath) => {
-    let config = require(rootpath + "/config/config.json")
-    const db = {}
-    let configDB = config[ENV]
-    db.getPool = async () => {
-        if (pool) {
+
+let config = require('../config/config.json')
+let configDB = config['development']
+
+class Database {
+    async getPool () {
+        try {    
+            if (pool) {
+                return pool
+            }
+            pool = await postgres({
+                connectionLimit : 500,
+                host: configDB.host,
+                port: configDB.port,
+                user: configDB.username,
+                password: configDB.password,
+                database: configDB.database,
+                timezone: 'SYSTEM',
+                timeout: 5,
+                debug: ENV === 'development' ? ['ComQueryPacket'] : false
+            })
             return pool
+        } catch (error) {
+            throw error
         }
-        pool = await postgres({
-            connectionLimit : 500,
-            host: configDB.host,
-            port: configDB.port,
-            user: configDB.username,
-            password: configDB.password,
-            database: configDB.database,
-            timezone: 'SYSTEM',
-            timeout: 5,
-            debug: ENV === 'development' ? ['ComQueryPacket'] : false
-        })
-        return pool
     }
 
-    db.getConnection = async () => {
+    async getConnection () {
         let conn = await db.getPool()
         conn = await conn.connect()
         return conn
     }
 
-    db.getAll = async (conn, sql, data, limit) => {
+    async getAll(conn, sql, data, limit) {
         let bind = data.length
         // if limit greater than 0 set the limit
         if(parseInt(limit) > 0) {
@@ -40,7 +45,7 @@ let dbx = (rootpath) => {
         return query.rows
     }
 
-    db.getPaging = async (conn, sql, data, page_no, no_per_page) => {
+    async getPaging (conn, sql, data, page_no, no_per_page) {
         let query = await conn.query(sql, data)
         let total_row = query.rowCount
         let last_row = no_per_page * page_no
@@ -64,7 +69,7 @@ let dbx = (rootpath) => {
         }
     }
 
-    db.insert = async (conn, tblname, data, id_name) => {
+    async insert (conn, tblname, data, id_name) {
         // validate data
         if(typeof data !== 'object') {
             throw getMessage('dbins001')
@@ -98,7 +103,7 @@ let dbx = (rootpath) => {
     }
 
 
-    db.update = async (conn, tblname, where, data) => {
+    async update (conn, tblname, where, data) {
         // validate data
         if(typeof data !== 'object') {
             throw getMessage('dbupd001')
@@ -145,7 +150,7 @@ let dbx = (rootpath) => {
     }
 
 
-    db.delete = async (conn, tblname, where) => {
+    async delete (conn, tblname, where) {
         // validate data
         if(typeof where !== 'object') {
             throw getMessage('dbdel001')
@@ -166,7 +171,6 @@ let dbx = (rootpath) => {
         let sql = "DELETE FROM " + tblname + " WHERE " + where.cond
         return await conn.query(sql, binding)
     }
-    return db
 }
 
-module.exports = dbx
+module.exports = Database;

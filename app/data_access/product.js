@@ -1,3 +1,5 @@
+const db = require('../core/database');
+
 class ProductDAO {
     async get(id) {
         
