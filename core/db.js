@@ -2,6 +2,8 @@
 
 const dotenv = require('dotenv').config();
 const { Pool } = require('pg');
+const Boom = require('@hapi/boom');
+const _ = require('underscore');
 
 const pool = new Pool({
     connectionString: process.env.DATABASE_URL
@@ -22,15 +24,16 @@ const ErrorCodes = {
 
 class Database {
     async query (params) {
-        try {
-            const sql = params.sql;
-            const values = params.values;
-            
-            const res = await pool.query(sql, values)
-            return res.rows[0];   
-        } catch (error) {
-            throw error
+        const sql = params.sql;
+        const values = params.values;
+        
+        const res = await pool.query(sql, values)
+
+        if(_.isEmpty(res.rows[0])){
+            throw Boom.notFound()
         }
+
+        return res.rows[0];
     }
 
 
@@ -43,6 +46,11 @@ class Database {
         }
 
         let query = await pool.query(sql, data)
+
+        if(_.isEmpty(query.rows)){
+            throw Boom.notFound()
+        }
+
         return query.rows
     }
 
