@@ -2,15 +2,16 @@
 
 const Db = require('../../core/db');
 const db = new Db;
+const tbl = require('../../config/tables.json');
+const assert = require('assert-plus');
 
 class ProductDAO {
     async get(id) {
         try {
-            let values = [
-                id
-            ]
+            assert.optionalNumber(id);
 
-			let sql = 'SELECT * FROM product WHERE product_id = $1 ';
+            let values = [id]
+			let sql = `SELECT * FROM ${tbl.product} WHERE product_id = $1`;
 
 			let result = await db.query({
 				sql : sql, 

@@ -4,7 +4,7 @@ const product = new ProductDAO;
 class ProductController {
     async get(request, reply) {
         try {
-            const params = request.params.product_id;
+            const params = request.params.product_id || 0;
 
             const result = await product.get(params);
             return result;
