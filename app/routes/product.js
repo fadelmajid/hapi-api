@@ -3,15 +3,32 @@
 const ProductController = require('../controllers/product');
 const product = new ProductController;
 
-module.exports = function(server) {
+module.exports = () => {
 	return [
 		{
 			method: 'GET',
 			path: '/product/{product_id}',
 			handler: product.get
-			// handler: (request, h) => {
-			// 	return request.params.product_id;
-			// }
+		},
+		{
+			method: 'GET',
+			path: '/product',
+			handler: product.list
+		},
+		{
+			method: 'POST',
+			path: '/product',
+			handler: product.create
+		},
+		{
+			method: 'PATCH',
+			path: '/product/{product_id}',
+			handler: product.update
+		},
+		{
+			method: 'DELETE',
+			path: '/product/{product_id}',
+			handler: product.update
 		}
 	];
-}();
+};
