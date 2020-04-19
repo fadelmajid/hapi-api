@@ -7,6 +7,19 @@ const pool = new Pool({
     connectionString: 'postgres://postgres:a455328fm@localhost:5432/hapidb'
 });
 
+const ErrorCodes = {
+    dbins001: "Insert Query Error! Data should be an object.",
+    dbins002: "Insert Query Error! Please provide data.",
+    dbupd001: "Update Query Error! Data should be an object.",
+    dbupd002: "Update Query Error! Please provide where condition.",
+    dbupd003: "Update Query Error! Please provide cond & bind.",
+    dbupd004: "Update Query Error! Please provide where condition.",
+    dbupd005: "Update Query Error! Please provide data.",
+    dbdel001: "Delete Query Error! Please provide where condition.",
+    dbdel002: "Delete Query Error! Please provide cond & bind.",
+    dbdel003: "Delete Query Error! Please provide where condition.",
+}
+
 class Database {
     async query (params) {
         try {
@@ -60,7 +73,7 @@ class Database {
     async insert (tblname, data, id_name) {
         // validate data
         if(typeof data !== 'object') {
-            throw getMessage('dbins001')
+            throw ErrorCodes.dbins001
         }
 
         // prepare const
@@ -68,7 +81,7 @@ class Database {
         let vals = ""
         let count = 0
         let binding = []
-        
+
         for (let prop in data) {
             count++
             if (!data.hasOwnProperty(prop)) {
@@ -81,7 +94,7 @@ class Database {
         }
 
         if(cols == '' || vals == '') {
-            throw getMessage('dbins002')
+            throw ErrorCodes.dbins002
         }else{
             cols = cols.slice(0, -1)
             vals = vals.slice(0, -1)
@@ -96,19 +109,19 @@ class Database {
     async update (tblname, where, data) {
         // validate data
         if(typeof data !== 'object') {
-            throw getMessage('dbupd001')
+            throw ErrorCodes.dbupd001
         }
         if(typeof where !== 'object') {
-            throw getMessage('dbupd002')
+            throw ErrorCodes.dbupd002
         }else if(where.cond === undefined) {
-            throw getMessage('dbupd003')
+            throw ErrorCodes.dbupd003
         }else if(where.cond == '') {
-            throw getMessage('dbupd004')
+            throw ErrorCodes.dbupd004
         }
 
         let count = 0
         let binding = []
-        //let where = {"cond": "test_id = ? ", "bind": [id]}
+        //let where = cond": "test_id = ? ", "bind": [id]}
         if(where.bind !== undefined && typeof where.bind == 'object') {
             for(let i = 0, len = where.bind.length; i < len; i++) {
                 count++
@@ -128,7 +141,7 @@ class Database {
             binding.push(data[prop])
         }
         if(setcond == '') {
-            throw getMessage('dbupd005')
+            throw ErrorCodes.dbupd005
         }else{
             setcond = setcond.slice(0, -1)
         }
@@ -143,15 +156,15 @@ class Database {
     async delete (tblname, where) {
         // validate data
         if(typeof where !== 'object') {
-            throw getMessage('dbdel001')
+            throw ErrorCodes.dbdel001
         }else if(where.cond === undefined) {
-            throw getMessage('dbdel002')
+            throw ErrorCodes.dbdel002
         }else if(where.cond == '') {
-            throw getMessage('dbdel003')
+            throw ErrorCodes.dbdel003
         }
 
         let binding = []
-        //let where = {"cond": "test_id = ? ", "bind": [id]}
+        //let where = cond": "test_id = ? ", "bind": [id]}
         if(where.bind !== undefined && typeof where.bind == 'object') {
             for(let i = 0, len = where.bind.length; i < len; i++) {
                 binding.push(where.bind[i])
