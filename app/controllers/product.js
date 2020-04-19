@@ -1,7 +1,6 @@
 const ProductDAO = require('../models/product');
 const product = new ProductDAO;
 const _ = require('underscore');
-const validator = require('validator');
 
 class ProductController {
     async get(request, reply) {
@@ -17,14 +16,20 @@ class ProductController {
 
     async list(request, reply) {
         try {
-            console.log(request.query);
             // query
-            const keyword = request.query.keyword || '';
-            console.log(keyword)
-            keyword = `% ${keyword} %`;
+            let keyword = request.query.keyword; 
+            if(_.isEmpty(request.query.keyword)){
+                keyword = null
+            };
 
-            const where = ' AND (product_name LIKE $1 OR product_desc LIKE $2) '
-            const data = [keyword, keyword];
+            const where = ''
+            const data = []
+            if(!_.isNull(keyword)){
+                keyword = `% ${keyword} %`;
+                where = ' AND (product_name LIKE $1 OR product_desc LIKE $2) '
+                data = [keyword, keyword];
+            }
+
             const result = await product.list(where, data);
             return result;
         } catch (error) {

@@ -25,6 +25,9 @@ class ProductDAO {
     async list(where = '', data = [], order_by = " product_id ASC ", limit = 0) {
         const sql = "SELECT * FROM " + tbl.product + " WHERE 1=1 " + where + " ORDER BY " + order_by;
 
+        console.log(sql);
+        console.log(data);
+        
         const res = await db.getAll(sql, data, limit);
         return res;
     }
