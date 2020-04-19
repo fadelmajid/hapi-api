@@ -4,7 +4,7 @@ const dotenv = require('dotenv').config();
 const { Pool } = require('pg');
 
 const pool = new Pool({
-    connectionString: 'postgres://postgres:a455328fm@localhost:5432/hapidb'
+    connectionString: process.env.DATABASE_URL
 });
 
 const ErrorCodes = {

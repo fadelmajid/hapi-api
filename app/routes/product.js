@@ -3,7 +3,7 @@
 const ProductController = require('../controllers/product');
 const product = new ProductController;
 
-module.exports = () => {
+module.exports = function() {
 	return [
 		{
 			method: 'GET',
@@ -28,7 +28,7 @@ module.exports = () => {
 		{
 			method: 'DELETE',
 			path: '/product/{product_id}',
-			handler: product.update
+			handler: product.delete
 		}
 	];
-};
+}();

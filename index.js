@@ -1,10 +1,10 @@
 "use strict";
 
+const dotenv = require('dotenv').config();
 const Hapi = require('@hapi/hapi');
 const constants = require('./config/config.json');
 const routes = require('./app/routes');
 const _ = require('underscore');
-const environment = process.env;
 
 const options = {
 	state : {
@@ -14,8 +14,8 @@ const options = {
 	}
 };
 
-const host = constants['development'].host;
-const port = constants['development'].app_port
+const host = constants[process.env.NODE_ENV].host;
+const port = constants[process.env.NODE_ENV].app_port
 const server = Hapi.server({
     port: port,
     host: host
