@@ -1,8 +1,34 @@
 const ProductDAO = require('../models/product');
 const product = new ProductDAO;
+const ElevaniaAPI = require('../clients/elevania')
+const elevania = new ElevaniaAPI;
+
 const _ = require('underscore');
 
 class ProductController {
+    async elevaniaProduct(request, reply) {
+        try {
+            const result = await elevania.reqData();
+            
+            for(let i = 0; i < result.length; i++){
+                let data = {
+                    product_name: result[i].prdNm,
+                    product_desc: result[i].dispCtgrNmRoot,
+                    product_no: result[i].prdNo,
+                    product_price: result[i].selPrc,
+                    product_image: result[i].imageKindChk
+                };
+
+                await product.create(data);
+            }
+
+            const res = await product.list();
+            return res;
+        } catch (error) {
+            throw error   
+        }
+    }
+
     async get(request, reply) {
         try {
             const params = request.params.product_id || 0;

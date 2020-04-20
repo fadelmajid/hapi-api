@@ -7,6 +7,11 @@ module.exports = function() {
 	return [
 		{
 			method: 'GET',
+			path: '/product/elevania',
+			handler: product.elevaniaProduct
+		},
+		{
+			method: 'GET',
 			path: '/product/{product_id}',
 			handler: product.get
 		},
