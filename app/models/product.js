@@ -14,7 +14,7 @@ class ProductDAO {
 				sql : sql, 
 				values: values
             });
-            console.log('================================');
+
             return result;
         } catch (error) {
             throw error
