@@ -1,0 +1,162 @@
+{
+	"info": {
+		"_postman_id": "b7c7c2fd-0eb5-4bd7-b4cc-ca535809334c",
+		"name": "Hapi API",
+		"description": "Request & Response Assignment API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "get",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{proto}}://{{domain-url}}/product",
+					"protocol": "{{proto}}",
+					"host": [
+						"{{domain-url}}"
+					],
+					"path": [
+						"product"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "list",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{proto}}://{{domain-url}}/product",
+					"protocol": "{{proto}}",
+					"host": [
+						"{{domain-url}}"
+					],
+					"path": [
+						"product"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"product_name\": \"Adidas 9977\",\n\t\"product_desc\": \"Adidas 9977 - Sepatu Andalan Kita\",\n\t\"product_price\": \"7900000\",\n\t\"product_no\": \"921349\",\n\t\"product_image\": \"https://google.com\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{proto}}://{{domain-url}}/product",
+					"protocol": "{{proto}}",
+					"host": [
+						"{{domain-url}}"
+					],
+					"path": [
+						"product"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"product_name\": \"Adidas 6060 - 2\",\n\t\"product_desc\": \"Adidas 6060 - Sepatu Andalan Kita\",\n\t\"product_price\": \"1000000\",\n\t\"product_no\": \"92134\",\n\t\"product_image\": \"https://google.com\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{proto}}://{{domain-url}}/product/1",
+					"protocol": "{{proto}}",
+					"host": [
+						"{{domain-url}}"
+					],
+					"path": [
+						"product",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{proto}}://{{domain-url}}/product/2",
+					"protocol": "{{proto}}",
+					"host": [
+						"{{domain-url}}"
+					],
+					"path": [
+						"product",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get and store elevania product - one time",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{proto}}://{{domain-url}}/product/elevania",
+					"protocol": "{{proto}}",
+					"host": [
+						"{{domain-url}}"
+					],
+					"path": [
+						"product",
+						"elevania"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "26fea0a8-d7b2-4cfe-a547-f0d1040220ab",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "428c87a8-635d-47b1-8e3f-9161a2a5fc82",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"protocolProfileBehavior": {}
+}
