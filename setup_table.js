@@ -3,10 +3,7 @@ const { Pool } = require('pg');
 
 console.log(process.env.NODE_ENV);
 const pool = new Pool({
-  host: "localhost",
-  user: "postgres",
-  password: "a455328fm",
-  database: "projecthapi"
+  connectionString: process.env.DATABASE_URL
 });
 
 pool.connect(function(err) {
