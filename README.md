@@ -4,13 +4,11 @@ Hapi API
 Setup
 ------------
 
-5. npm install
-1. cp .env.example .env
-2. update file according to your local configuration
-3. cp config/config.example.json config/config.json
-4. update file according to your local configuration
-5. run node setup_database.js
-6. run node setup_table
+1. npm install
+2. cp .env.example .env
+3. update file according to your local configuration
+4. run node setup_database.js
+5. run node setup_table
 6. npm start
 7. hit http://localhost:8000
 
